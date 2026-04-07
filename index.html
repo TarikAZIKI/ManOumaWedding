@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oumaïma & Mansour — 22.06.2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:      '#FAF6F0',
+            creamDark:  '#F0EBE3',
+            terracotta: '#C4856A',
+            terracottaLight: '#D9A68E',
+            gold:       '#B8945F',
+            goldLight:  '#D4B98A',
+            charcoal:   '#2C2825',
+            warmGray:   '#7A7470',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            serif:   ['"Cormorant Garamond"', 'serif'],
+            sans:    ['"Montserrat"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #FAF6F0; color: #2C2825; overflow-x: hidden; }
+
+    /* ── Scroll reveal ─────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: .12s; }
+    .reveal-delay-2 { transition-delay: .24s; }
+    .reveal-delay-3 { transition-delay: .36s; }
+    .reveal-delay-4 { transition-delay: .48s; }
+
+    /* ── Hero overlay ──────────────────────────────── */
+    .hero-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(44,40,37,.18) 0%,
+        rgba(44,40,37,.05) 40%,
+        rgba(44,40,37,.35) 100%
+      );
+    }
+
+    /* ── Decorative divider ────────────────────────── */
+    .ornament { letter-spacing: .35em; }
+
+    /* ── Bounce arrow ──────────────────────────────── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(10px); }
+    }
+    .arrow-float { animation: float 2.4s ease-in-out infinite; }
+
+    /* ── Sound button pulse ring ───────────────────── */
+    @keyframes pulse-ring {
+      0%   { transform: scale(1);   opacity: .5; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    .sound-btn::after {
+      content: '';
+      position: absolute; inset: -4px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.4);
+      animation: pulse-ring 2.4s ease-out infinite;
+    }
+
+    /* ── Countdown flip feel ──────────────────────── */
+    .countdown-card {
+      background: linear-gradient(145deg, rgba(255,255,255,.7), rgba(255,255,255,.35));
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(184,148,95,.18);
+    }
+
+    /* ── Gold ornamental line ─────────────────────── */
+    .gold-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #B8945F, transparent);
+    }
+
+    /* ── Detail cards ─────────────────────────────── */
+    .detail-card {
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(184,148,95,.12);
+      transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease;
+    }
+    .detail-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(184,148,95,.12);
+    }
+
+    /* ── RSVP inputs ──────────────────────────────── */
+    .input-field {
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(184,148,95,.2);
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #B8945F;
+      box-shadow: 0 0 0 3px rgba(184,148,95,.12);
+    }
+
+    /* ── Radio custom ─────────────────────────────── */
+    .radio-option input:checked + .radio-label {
+      background: #B8945F;
+      color: #FAF6F0;
+      border-color: #B8945F;
+    }
+    .radio-label {
+      border: 1px solid rgba(184,148,95,.3);
+      transition: all .3s ease;
+      cursor: pointer;
+    }
+    .radio-label:hover {
+      border-color: #B8945F;
+    }
+
+    /* ── Submit button ─────────────────────────────── */
+    .btn-submit {
+      background: linear-gradient(135deg, #B8945F 0%, #D4B98A 100%);
+      color: #FAF6F0;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184,148,95,.3);
+    }
+    .btn-submit:active { transform: translateY(0); }
+
+    /* ── Zellige-inspired pattern (subtle) ─────── */
+    .zellige-bg {
+      position: relative;
+    }
+    .zellige-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: .028;
+      background-image:
+        radial-gradient(circle at 25% 25%, #B8945F 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, #B8945F 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    /* ── Success overlay ──────────────────────────── */
+    .success-overlay {
+      animation: fadeUp .6s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #FAF6F0; }
+    ::-webkit-scrollbar-thumb { background: #D4B98A; border-radius: 3px; }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+  <!-- ═══════════════════════════════════════════════
+       1 · HERO SECTION
+  ═══════════════════════════════════════════════════ -->
+  <section id="hero" class="relative w-full h-screen overflow-hidden">
+    <!-- Background video -->
+    <video
+      id="bgVideo"
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay muted loop playsinline
+      preload="auto"
+    >
+      <source src="wedding.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Overlay -->
+    <div class="hero-overlay absolute inset-0 z-10"></div>
+
+    <!-- Content -->
+    <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6">
+      <div id="heroText" style="opacity:0;transition:opacity 1s ease" class="flex flex-col items-center">
+        <p class="font-sans text-[11px] tracking-[.4em] uppercase text-white/70 mb-4">We're getting married</p>
+        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-medium leading-[1.1]">
+          Oumaïma<br/>
+          <span class="font-display italic text-goldLight">&</span><br/>
+          Mansour
+        </h1>
+        <div class="mt-6 gold-line w-16"></div>
+        <p class="font-serif text-lg sm:text-xl text-white/80 mt-5 tracking-wide">22 · 06 · 2026</p>
+      </div>
+
+      <!-- Sound toggle -->
+      <button
+        id="soundBtn"
+        class="sound-btn absolute bottom-28 sm:bottom-32 z-30 w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white/80 hover:text-white transition-colors backdrop-blur-sm bg-white/5"
+        aria-label="Toggle sound"
+      >
+        <svg id="soundOff" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-3.15a.75.75 0 011.28.53v13.74a.75.75 0 01-1.28.53L6.75 14.25H4.51a1.5 1.5 0 01-1.5-1.5v-1.5a1.5 1.5 0 011.5-1.5h2.24z"/>
+        </svg>
+        <svg id="soundOn" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-3.15a.75.75 0 011.28.53v12.74a.75.75 0 01-1.28.53L6.75 15.75H4.51a1.5 1.5 0 01-1.5-1.5v-4.5a1.5 1.5 0 011.5-1.5h2.24z"/>
+        </svg>
+      </button>
+
+      <!-- Scroll cue -->
+      <a id="scrollCue" href="#countdown" style="opacity:1;transition:opacity .7s ease" class="absolute bottom-10 left-0 right-0 mx-auto w-max z-30 arrow-float flex flex-col items-center gap-2 text-white/70 hover:text-white group">
+        <span class="font-sans text-[10px] tracking-[.3em] uppercase">Scroll for more</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       2 · COUNTDOWN
+  ═══════════════════════════════════════════════════ -->
+  <section id="countdown" class="zellige-bg py-24 sm:py-32 px-6 bg-cream">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="ornament font-sans text-[10px] tracking-[.45em] uppercase text-gold mb-3 reveal">Save the date</p>
+      <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-charcoal reveal reveal-delay-1">Until we say <em class="text-gold">"I do"</em></h2>
+      <div class="gold-line w-10 mx-auto mt-6 mb-12 reveal reveal-delay-2"></div>
+
+      <div id="timer" class="flex justify-center gap-3 sm:gap-5 reveal reveal-delay-3">
+        <div class="countdown-card rounded-xl px-4 sm:px-7 py-5 sm:py-7 text-center min-w-[72px] sm:min-w-[100px]">
+          <span id="days" class="font-display text-3xl sm:text-5xl text-charcoal block leading-none">--</span>
+          <span class="font-sans text-[9px] sm:text-[10px] tracking-[.3em] uppercase text-warmGray mt-2 block">Days</span>
+        </div>
+        <div class="countdown-card rounded-xl px-4 sm:px-7 py-5 sm:py-7 text-center min-w-[72px] sm:min-w-[100px]">
+          <span id="hours" class="font-display text-3xl sm:text-5xl text-charcoal block leading-none">--</span>
+          <span class="font-sans text-[9px] sm:text-[10px] tracking-[.3em] uppercase text-warmGray mt-2 block">Hours</span>
+        </div>
+        <div class="countdown-card rounded-xl px-4 sm:px-7 py-5 sm:py-7 text-center min-w-[72px] sm:min-w-[100px]">
+          <span id="minutes" class="font-display text-3xl sm:text-5xl text-charcoal block leading-none">--</span>
+          <span class="font-sans text-[9px] sm:text-[10px] tracking-[.3em] uppercase text-warmGray mt-2 block">Min</span>
+        </div>
+        <div class="countdown-card rounded-xl px-4 sm:px-7 py-5 sm:py-7 text-center min-w-[72px] sm:min-w-[100px]">
+          <span id="seconds" class="font-display text-3xl sm:text-5xl text-charcoal block leading-none">--</span>
+          <span class="font-sans text-[9px] sm:text-[10px] tracking-[.3em] uppercase text-warmGray mt-2 block">Sec</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       3 · WELCOME
+  ═══════════════════════════════════════════════════ -->
+  <section id="welcome" class="py-24 sm:py-32 px-6 bg-white">
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="ornament font-sans text-[10px] tracking-[.45em] uppercase text-gold mb-3 reveal">Celebration of love</p>
+      <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-charcoal reveal reveal-delay-1">You are invited</h2>
+      <div class="gold-line w-10 mx-auto mt-6 mb-10 reveal reveal-delay-2"></div>
+      <p class="font-serif text-lg sm:text-xl leading-relaxed text-warmGray reveal reveal-delay-3">
+        We're so delighted you're here and can't wait to celebrate this special day with you.
+        Having you with us on this day means everything, and we're truly excited to share
+        these moments, laughter and memories together.
+      </p>
+      <p class="font-serif italic text-xl sm:text-2xl text-terracotta mt-10 reveal reveal-delay-4">
+        With all our love,<br/>Oumaïma &amp; Mansour
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       4 · DETAILS
+  ═══════════════════════════════════════════════════ -->
+  <section id="details" class="zellige-bg py-24 sm:py-32 px-6 bg-cream">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="ornament font-sans text-[10px] tracking-[.45em] uppercase text-gold mb-3 reveal">Mark your calendar</p>
+      <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-charcoal reveal reveal-delay-1">Details of the day</h2>
+      <p class="font-serif text-lg text-warmGray mt-4 reveal reveal-delay-2">Here is everything you need to know</p>
+      <div class="gold-line w-10 mx-auto mt-6 mb-14 reveal reveal-delay-2"></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+        <!-- Date -->
+        <div class="detail-card rounded-2xl p-8 reveal reveal-delay-1">
+          <div class="w-14 h-14 mx-auto mb-5 rounded-full flex items-center justify-center bg-gold/10">
+            <svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-xl text-charcoal mb-1">The Day</h3>
+          <p class="font-serif text-warmGray">Monday</p>
+          <p class="font-display text-2xl text-charcoal mt-1">22 June 2026</p>
+        </div>
+
+        <!-- Time -->
+        <div class="detail-card rounded-2xl p-8 reveal reveal-delay-2">
+          <div class="w-14 h-14 mx-auto mb-5 rounded-full flex items-center justify-center bg-gold/10">
+            <svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-xl text-charcoal mb-1">The Hour</h3>
+          <p class="font-serif text-warmGray">Ceremony begins at</p>
+          <p class="font-display text-2xl text-charcoal mt-1">17h00</p>
+        </div>
+
+        <!-- Venue -->
+        <div class="detail-card rounded-2xl p-8 reveal reveal-delay-3">
+          <div class="w-14 h-14 mx-auto mb-5 rounded-full flex items-center justify-center bg-gold/10">
+            <svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-xl text-charcoal mb-1">The Venue</h3>
+          <p class="font-serif text-warmGray">Villa Palace Amina</p>
+          <p class="font-display text-lg text-charcoal mt-1">Km 9, Route de Fès<br/>Marrakech, Maroc</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       5 · MAP
+  ═══════════════════════════════════════════════════ -->
+  <section id="map" class="py-24 sm:py-32 px-6 bg-white">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="ornament font-sans text-[10px] tracking-[.45em] uppercase text-gold mb-3 reveal">How to find us</p>
+      <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-charcoal reveal reveal-delay-1">The Venue</h2>
+      <div class="gold-line w-10 mx-auto mt-6 mb-10 reveal reveal-delay-2"></div>
+      <p class="font-serif text-lg text-warmGray mb-8 reveal reveal-delay-2">Villa Palace Amina — Km 9, Route de Fès, Marrakech</p>
+      <div class="reveal reveal-delay-3 rounded-2xl overflow-hidden shadow-lg" style="border: 1px solid rgba(184,148,95,.15)">
+        <iframe
+          src="https://maps.google.com/maps?saddr=Gare+de+Marrakech&daddr=Villa+Palace+Amina,+Km+9+Route+de+Fes,+Marrakech,+Morocco&output=embed"
+          width="100%" height="420" style="border:0; display:block;"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <a
+        href="https://www.google.com/maps/dir/?api=1&destination=Villa+Palace+Amina,+Km+9+Route+de+Fes,+Marrakech,+Morocco"
+        target="_blank"
+        rel="noopener"
+        class="inline-block mt-6 font-sans text-xs tracking-[.2em] uppercase text-gold hover:text-terracotta transition-colors reveal reveal-delay-4"
+      >
+        Open in Google Maps →
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       6 · RSVP
+  ═══════════════════════════════════════════════════ -->
+  <section id="rsvp" class="py-24 sm:py-32 px-6 bg-white">
+    <div class="max-w-xl mx-auto text-center">
+      <p class="ornament font-sans text-[10px] tracking-[.45em] uppercase text-gold mb-3 reveal">We'd love to hear from you</p>
+      <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-charcoal reveal reveal-delay-1">RSVP</h2>
+      <p class="font-serif text-warmGray mt-4 reveal reveal-delay-2">Kindly confirm your attendance by <strong class="text-charcoal">18th May 2026</strong></p>
+      <div class="gold-line w-10 mx-auto mt-6 mb-12 reveal reveal-delay-2"></div>
+
+      <!-- Form -->
+      <div id="rsvpForm" class="text-left space-y-7 reveal reveal-delay-3">
+        <!-- Name -->
+        <div>
+          <label class="block font-sans text-xs tracking-[.15em] uppercase text-warmGray mb-2">Full name</label>
+          <input
+            id="guestName"
+            name="name"
+            type="text"
+            placeholder="Your full name"
+            class="input-field w-full rounded-xl px-5 py-3.5 font-serif text-charcoal placeholder:text-warmGray/50"
+          />
+        </div>
+
+        <!-- Attendance -->
+        <div>
+          <label class="block font-sans text-xs tracking-[.15em] uppercase text-warmGray mb-3">Will you attend?</label>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <label class="radio-option flex-1">
+              <input type="radio" name="attendance" value="accept" class="hidden" />
+              <span class="radio-label block text-center rounded-xl px-5 py-3.5 font-serif text-charcoal">
+                Joyfully accept
+              </span>
+            </label>
+            <label class="radio-option flex-1">
+              <input type="radio" name="attendance" value="decline" class="hidden" />
+              <span class="radio-label block text-center rounded-xl px-5 py-3.5 font-serif text-charcoal">
+                Regretfully decline
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label class="block font-sans text-xs tracking-[.15em] uppercase text-warmGray mb-2">Leave us a note 🫶</label>
+          <textarea
+            id="guestMessage"
+            name="message"
+            rows="4"
+            placeholder="Write a few words for Oumaïma & Mansour..."
+            class="input-field w-full rounded-xl px-5 py-3.5 font-serif text-charcoal placeholder:text-warmGray/50 resize-none"
+          ></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button
+          id="submitBtn"
+          class="btn-submit w-full rounded-xl px-8 py-4 font-sans text-sm tracking-[.2em] uppercase"
+        >
+          Send RSVP
+        </button>
+      </div>
+
+      <!-- Success state -->
+      <div id="rsvpSuccess" class="hidden">
+        <div class="success-overlay py-12">
+          <div class="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center bg-gold/10">
+            <svg class="w-9 h-9 text-gold" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+            </svg>
+          </div>
+          <h3 class="font-display text-2xl sm:text-3xl text-charcoal">Thank you!</h3>
+          <p class="font-serif text-warmGray mt-3 text-lg">Your response has been received.<br/>We can't wait to celebrate with you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════ -->
+  <footer class="py-12 px-6 bg-charcoal text-center">
+    <p class="font-display text-2xl text-goldLight">O &amp; M</p>
+    <p class="font-sans text-[10px] tracking-[.35em] uppercase text-white/30 mt-3">22 June 2026</p>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init('JiaMgYY_JlQzwARN4');</script>
+  <script>
+    /* ── Sound toggle ─────────────────────────────── */
+    const video   = document.getElementById('bgVideo');
+    const soundBtn= document.getElementById('soundBtn');
+    const iconOff = document.getElementById('soundOff');
+    const iconOn  = document.getElementById('soundOn');
+    let isMuted = true;
+
+    /* ── Scroll cue (last 2 s of video) ──────────── */
+    const scrollCue = document.getElementById('scrollCue');
+    const heroText  = document.getElementById('heroText');
+    video.addEventListener('timeupdate', () => {
+      if (!video.duration) return;
+      const remaining = video.duration - video.currentTime;
+      const show = remaining <= 8;
+      heroText.style.opacity = show ? '1' : '0';
+    });
+
+    soundBtn.addEventListener('click', () => {
+      isMuted = !isMuted;
+      video.muted = isMuted;
+      iconOff.classList.toggle('hidden', !isMuted);
+      iconOn.classList.toggle('hidden', isMuted);
+    });
+
+    /* ── Countdown ────────────────────────────────── */
+    const weddingDate = new Date('2026-06-22T00:00:00').getTime();
+
+    function updateCountdown() {
+      const now  = Date.now();
+      const diff = Math.max(0, weddingDate - now);
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').textContent    = String(d).padStart(2, '0');
+      document.getElementById('hours').textContent   = String(h).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    /* ── Scroll reveal (IntersectionObserver) ─────── */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+    reveals.forEach(el => observer.observe(el));
+
+    /* ── RSVP form ────────────────────────────────── */
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+      const name       = document.getElementById('guestName').value.trim();
+      const attendance = document.querySelector('input[name="attendance"]:checked');
+      const message    = document.getElementById('guestMessage').value.trim();
+
+      if (!name) {
+        alert('Please enter your full name.');
+        return;
+      }
+      if (!attendance) {
+        alert('Please select whether you will attend.');
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      try {
+        await emailjs.send('service_cseow9s', 'template_8b9ciar', {
+          name,
+          attendance: attendance.value,
+          message,
+        });
+        document.getElementById('rsvpForm').classList.add('hidden');
+        document.getElementById('rsvpSuccess').classList.remove('hidden');
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Send RSVP';
+        alert('Something went wrong. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>
