@@ -385,25 +385,6 @@
           />
         </div>
 
-        <!-- Attendance -->
-        <div>
-          <label class="block font-sans text-xs tracking-[.15em] uppercase text-warmGray mb-3">Will you attend?</label>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <label class="radio-option flex-1">
-              <input type="radio" name="attendance" value="accept" class="hidden" />
-              <span class="radio-label block text-center rounded-xl px-5 py-3.5 font-serif text-charcoal">
-                Joyfully accept
-              </span>
-            </label>
-            <label class="radio-option flex-1">
-              <input type="radio" name="attendance" value="decline" class="hidden" />
-              <span class="radio-label block text-center rounded-xl px-5 py-3.5 font-serif text-charcoal">
-                Regretfully decline
-              </span>
-            </label>
-          </div>
-        </div>
-
         <!-- Message -->
         <div>
           <label class="block font-sans text-xs tracking-[.15em] uppercase text-warmGray mb-2">Leave us a note 🫶</label>
@@ -516,16 +497,11 @@
 
     /* ── RSVP form ────────────────────────────────── */
     document.getElementById('submitBtn').addEventListener('click', async () => {
-      const name       = document.getElementById('guestName').value.trim();
-      const attendance = document.querySelector('input[name="attendance"]:checked');
-      const message    = document.getElementById('guestMessage').value.trim();
+      const name    = document.getElementById('guestName').value.trim();
+      const message = document.getElementById('guestMessage').value.trim();
 
       if (!name) {
         alert('Please enter your full name.');
-        return;
-      }
-      if (!attendance) {
-        alert('Please select whether you will attend.');
         return;
       }
 
@@ -536,7 +512,6 @@
       try {
         await emailjs.send('service_cseow9s', 'template_8b9ciar', {
           name,
-          attendance: attendance.value,
           message,
         });
         document.getElementById('rsvpForm').classList.add('hidden');
